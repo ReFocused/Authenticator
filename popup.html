@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ReFocused Authenticator Popup</title>
+</head>
+<body>
+<h1 id="heading"> ReFocused&nbsp;Authenticator is <b id="headingActiveLabel">unset</b></h1>
+<button class="deactivate">Deactivate</button>
+<button class="activate hidden">Activate</button>
+<p id="testOutput"></p>
+<script src="./popup.js" ></script>
+</body>
+<style>
+    button {
+
+        border: black solid 1px;
+        border-radius: 2px;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        transition: 300ms;
+    }
+    button:hover {
+        filter: brightness(0.8) drop-shadow(0 0 1rem #4b4b4b);
+    }
+    .deactivate {
+        background-color: #ff4747;
+    }
+    .activate {
+        background-color: #4CAF50;
+    }
+    .hidden {
+        display: none;
+    }
+    body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    #heading {
+        text-align: center;
+    }
+</style>
+</html>

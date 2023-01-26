@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "ReFocused Authenticator",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "ReFocused Authenticator"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "cookies"
+  ],
+  "host_permissions": [
+    "https://brevardk12.focusschoolsoftware.com/*",
+    "https://refocused.up.railway.app/*"
+  ]
+}
