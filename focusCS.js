@@ -7,6 +7,7 @@ console.log("EXTENSION CS INJECTED");
 let url = new URL(window.location.href);
 let urlParams = new URLSearchParams(url.search);
 let redir = urlParams.get('redir');
+console.log("redir: " + redir)
 if (redir) {
     theStorage.set({"refoc-redir": redir}).then(() => {
         console.log("refoc-redir set to " + redir);
@@ -33,14 +34,14 @@ if (true) {
 
 
             // __Module__.token __Module__.session_id
-            theStorage.set({"refoc-token": token}).then(() => {
-                console.log("refoc-token set to " + token);
-            });
-            theStorage.set({"refoc-auth-token": authToken}).then(() => {
-                console.log("refoc-auth-token set to " + authToken);
-            });
+            // theStorage.set({"refoc-token": token}).then(() => {
+            //     console.log("refoc-token set to " + token);
+            // });
+            // theStorage.set({"refoc-auth-token": authToken}).then(() => {
+            //     console.log("refoc-auth-token set to " + authToken);
+            // });
             // Send a message to the background script to refresh the end cookies
-            chrome.runtime.sendMessage({type: "refreshCookies"}, function (response) {
+            chrome.runtime.sendMessage({type: "refreshCookies", token: token, authToken: authToken}, function (response) {
                 console.log(response);
             });
 
@@ -50,7 +51,8 @@ if (true) {
                     theStorage.set({"refoc-redir": null}).then(() => {
                         console.log("refoc-redir set to null");
                     });
-                    window.location = result["refoc-redir"];
+                    console.log("Redirecting to " + result["refoc-redir"]);
+                    window.location = result["refoc-redir"] === "ref" ? "https://refocused.up.railway.app" : result["refoc-redir"];
                 }
             });
         }, 100);

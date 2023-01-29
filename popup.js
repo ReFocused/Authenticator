@@ -1,45 +1,29 @@
-let theStorage = chrome.storage.local;
-// Create an event listener for the .deactivate and .activate buttons
-// and call the appropriate function when they are clicked
+let endCookies = [];
+endCookies.push(await (chrome.cookies.get({
+    url: "https://refocused.up.railway.app/",
+    name: "refoc-token"
+})));
+endCookies.push(await (chrome.cookies.get({
+    url: "https://refocused.up.railway.app/",
+    name: "refoc-auth-token"
+})))
+endCookies.push(await (chrome.cookies.get({
+    url: "https://refocused.up.railway.app/",
+    name: "refoc-PHPSESSID"
+})))
+console.log(endCookies);
 
-let deactivateButton = document.querySelector('.deactivate');
-let activateButton = document.querySelector('.activate');
-
-deactivateButton.addEventListener('click', deactivate);
-activateButton.addEventListener('click', activate);
-
-function deactivate() {
-    localStorage.setItem('activated', 'false');
-    // Remove all cookies from the target url ("https://refocused.up.railway.app/")
-    // TODO: FIX THIS
-    chrome.cookies.getAll({url: "https://refocused.up.railway.app/"}, function (cookies) {
-        for (let i = 0; i < cookies.length; i++) {
-            let cookie = cookies[i];
-            chrome.cookies.remove({url: "https://refocused.up.railway.app/", name: cookie.name});
-            console.log("Removed cookie: " + cookie.name);
-        }
-    });
-    updateActiveButton()
-
+function truncate(s, n) {
+    if (s.length < n) return s;
+    return s.substring(0, n);
 }
 
-async function activate() {
-    localStorage.setItem('activated', 'true');
-
-    updateActiveButton()
+if (endCookies.every((cookie) => cookie !== null)){
+    document.getElementById("description").innerHTML = "Existing Auth Cookies found: <br> " +
+        endCookies.map((cookie) => cookie.name + ": " + truncate(cookie.value, 5) + "...").join("<br>")
+    document.getElementById("loginButton").innerText = "Refresh Session"
 }
-
-function updateActiveButton() {
-    // Set correct button to hidden and the other to visible
-    if (localStorage.getItem('activated') === 'true') {
-        deactivateButton.style.display = 'block';
-        activateButton.style.display = 'none';
-        document.getElementById("headingActiveLabel").innerText = "active";
-    }
-    else {
-        deactivateButton.style.display = 'none';
-        activateButton.style.display = 'block';
-        document.getElementById("headingActiveLabel").innerText = "not active";
-    }
+else {
+    document.getElementById("description").innerText = "No Cookies found, please login to Focus to authenticate."
+    document.getElementById("loginButton").innerText = "Log In"
 }
-updateActiveButton()

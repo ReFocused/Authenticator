@@ -8,14 +8,15 @@
     <title>ReFocused Authenticator Popup</title>
 </head>
 <body>
-<h1 id="heading"> ReFocused&nbsp;Authenticator is <b id="headingActiveLabel">unset</b></h1>
-<button class="deactivate">Deactivate</button>
-<button class="activate hidden">Activate</button>
-<p id="testOutput"></p>
-<script src="./popup.js" ></script>
+<h1 id="heading"> ReFocused&nbsp;Authenticator</h1>
+<p id="description"></p>
+<a class="primary button" id="loginButton"
+   href='https://brevardk12.focusschoolsoftware.com/focus/Modules.php?modname=misc%2FPortal.php&redir=ref'
+   target="_blank">Refresh Session</a>
+<script src="./popup.js" type="module"></script>
 </body>
 <style>
-    button {
+    .button {
 
         border: black solid 1px;
         border-radius: 2px;
@@ -27,24 +28,26 @@
         font-size: 16px;
         transition: 300ms;
     }
+
     button:hover {
         filter: brightness(0.8) drop-shadow(0 0 1rem #4b4b4b);
     }
-    .deactivate {
-        background-color: #ff4747;
+
+    .primary {
+        background-color: #2c9fff;
     }
-    .activate {
-        background-color: #4CAF50;
-    }
+
     .hidden {
         display: none;
     }
+
     body {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
     }
+
     #heading {
         text-align: center;
     }
