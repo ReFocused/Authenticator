@@ -32,7 +32,15 @@ chrome.runtime.onMessage.addListener((msg, sender, res) => {
                 value: cookie.value,
                 expirationDate: expiry
             });
-
         });
+
+        if (msg.mobileLoginToken) {
+            chrome.cookies.set({
+                url: targetUrl,
+                name: "focus_login_token",
+                value: msg.mobileLoginToken,
+                expirationDate: expiry
+            });
+        }
     }
 });

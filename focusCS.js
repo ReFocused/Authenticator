@@ -15,7 +15,7 @@ if (redir) {
 }
 
 // Register an event listener for the page to finish loading and then copy the auth token + go to redir + remove redir
-window.addEventListener('load', (event) => {
+window.addEventListener('load', () => {
     setTimeout(async () => {
         // Parse the dom to get the auth token and token
         let authTokenScript = document.querySelector("body > div > div > div > main > script:nth-child(2)").innerHTML;
@@ -26,6 +26,7 @@ window.addEventListener('load', (event) => {
         let token = /jwt=[\w+=/.-]+"/g.exec(tokenScript)
         token = token[0].substring(4, token[0].length - 1); // Remove the "jwt=" and the last "
 
+        let mobileLoginToken = null;
         if (USE_MOBILE_TOKEN) {
             let mobileHTML = await fetch("https://brevardk12.focusschoolsoftware.com/focus/mobileApps/community/")
             let mobileHTMLText = await mobileHTML.text();
@@ -33,10 +34,12 @@ window.addEventListener('load', (event) => {
             if (mobileToken && mobileToken.length > 10) {
                 token = mobileToken;
             }
+
+            mobileLoginToken = /"login_token":"[\w]*/g.exec(mobileHTMLText)[0].substring(15);
         }
 
         // Send a message to the background script to refresh the end cookies
-        chrome.runtime.sendMessage({type: "refreshCookies", token: token, authToken: authToken}, function (response) {
+        chrome.runtime.sendMessage({type: "refreshCookies", token: token, authToken: authToken, mobileLoginToken: mobileLoginToken}, function (response) {
             console.log(response);
         });
 
