@@ -1,7 +1,6 @@
 let theStorage = chrome.storage.local;
-console.log(await theStorage.get("refocused_target_url"));
-targetUrl = theStorage.get("refocused_target_url").then(async (targetUrl) => { //  tried to make this work with await but it didn't work
-    targetUrl = targetUrl["refocused_target_url"];
+chrome.storage.local.get("refocused_target_url").then(async (res) => { //  tried to make this work with await but it didn't work
+    let targetUrl = res["refocused_target_url"];
     let endCookies = [];
     endCookies.push(await (chrome.cookies.get({
         url: targetUrl,

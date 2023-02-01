@@ -1,21 +1,24 @@
 let theStorage = chrome.storage.local;
+const EXPIRATION_SECONDS = 60 * 60 * 24 // 1 day
 targetUrl = "https://refocused.up.railway.app/"
-// targetUrl = "https://example.com" // remember to change or add this to the manifest
+// targetUrl = "http://localhost:3000" // remember to change or add this to the manifest
 theStorage.set({refocused_target_url: targetUrl})
 chrome.runtime.onMessage.addListener((msg, sender, res) => {
     console.log(msg, sender, res);
     if (msg.type === "refreshCookies") {
-
+        let expiry = Math.floor(Date.now() / 1000) + EXPIRATION_SECONDS;
         chrome.cookies.set({
             url: targetUrl,
             name: "focus_session_id",
-            value: msg.authToken
+            value: msg.authToken,
+            expirationDate: expiry
         });
 
         chrome.cookies.set({
             url: targetUrl,
             name: "focus_token",
-            value: msg.token
+            value: msg.token,
+            expirationDate: expiry
         });
 
         chrome.cookies.get({
@@ -26,7 +29,8 @@ chrome.runtime.onMessage.addListener((msg, sender, res) => {
             chrome.cookies.set({
                 url: targetUrl,
                 name: "focus_php_session_id",
-                value: cookie.value
+                value: cookie.value,
+                expirationDate: expiry
             });
 
         });

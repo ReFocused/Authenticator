@@ -16,7 +16,7 @@
   "host_permissions": [
     "https://brevardk12.focusschoolsoftware.com/*",
     "https://refocused.up.railway.app/*",
-    "https://example.com/*"
+    "http://localhost:3000/*"
   ],
   "content_scripts": [
     {
