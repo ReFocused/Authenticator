@@ -1,5 +1,8 @@
 (async () => {
-    const url = chrome.storage.local.get("targetUrl");
+    /**
+     * @type {{targetUrl: string}}
+     */
+    const { targetUrl: url } = await chrome.storage.local.get("targetUrl");
 
     /**
      * @type {{name: string, value: string}[]}
