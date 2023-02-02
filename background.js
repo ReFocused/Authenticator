@@ -1,8 +1,8 @@
 let theStorage = chrome.storage.local;
-const EXPIRATION_SECONDS = 60 * 60 * 24 // 1 day
-targetUrl = "https://refocused.up.railway.app/"
+const EXPIRATION_SECONDS = 60 * 60 * 24; // 1 day
+targetUrl = "https://refocused.up.railway.app/";
 // targetUrl = "http://localhost:3000" // remember to change or add this to the manifest
-theStorage.set({refocused_target_url: targetUrl})
+theStorage.set({ refocused_target_url: targetUrl });
 chrome.runtime.onMessage.addListener((msg, sender, res) => {
     console.log(msg, sender, res);
     if (msg.type === "refreshCookies") {
@@ -21,18 +21,21 @@ chrome.runtime.onMessage.addListener((msg, sender, res) => {
             expirationDate: expiry
         });
 
-        chrome.cookies.get({
-            url: "https://brevardk12.focusschoolsoftware.com/focus",
-            name: "PHPSESSID"
-        }, function (cookie) {
-            console.log("Setting cookie: " + cookie.name);
-            chrome.cookies.set({
-                url: targetUrl,
-                name: "focus_php_session_id",
-                value: cookie.value,
-                expirationDate: expiry
-            });
-        });
+        chrome.cookies.get(
+            {
+                url: "https://brevardk12.focusschoolsoftware.com/focus",
+                name: "PHPSESSID"
+            },
+            function (cookie) {
+                console.log("Setting cookie: " + cookie.name);
+                chrome.cookies.set({
+                    url: targetUrl,
+                    name: "focus_php_session_id",
+                    value: cookie.value,
+                    expirationDate: expiry
+                });
+            }
+        );
 
         if (msg.mobileLoginToken) {
             chrome.cookies.set({
