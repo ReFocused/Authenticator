@@ -1,78 +1,54 @@
-let theStorage = chrome.storage.local;
-targetUrl = "";
-const USE_MOBILE_TOKEN = true;
-theStorage.get("refocused_target_url").then((result) => {
-    targetUrl = result.refocused_target_url;
-}); // Can't use await here, so we have to use a promise
+/**
+ * @type {string}
+ */
+let targetUrl;
+chrome.storage.local
+    .get("targetUrl")
+    .then((/** @type {{targetUrl: string}} */ { targetUrl: set }) => {
+        targetUrl = set;
+    }); // Can't use await here, so we have to use a promise
 
-console.log("EXTENSION CS INJECTED");
 let url = new URL(window.location.href);
 let urlParams = new URLSearchParams(url.search);
 let redir = urlParams.get("redir");
 
 if (redir) {
-    theStorage.set({ "refoc-redir": redir });
+    chrome.storage.local.set({ redir });
 }
 
 // Register an event listener for the page to finish loading and then copy the auth token + go to redir + remove redir
-window.addEventListener("load", () => {
-    setTimeout(async () => {
-        // Parse the dom to get the auth token and token
-        let authTokenScript = document.querySelector(
-            "body > div > div > div > main > script:nth-child(2)"
-        ).innerHTML;
-        let authToken = /{\n(\t){5}return "[\w+=/]+";/g.exec(authTokenScript);
-        authToken = authToken[0].substring(15, authToken[0].length - 2); // Remove the extra characters (\n\t\t\t\t\treturn ") and the last character (")
+document.addEventListener("DOMContentLoaded", async () => {
+    let sessionId =
+        /static get session_id\(\) {\n[\s]*return "([\w+=/]+)";/g.exec(
+            document.body.innerHTML
+        )[1];
 
-        let tokenScript = document.querySelector(
-            "body > div > div > div > main > script:nth-child(3)"
-        ).innerHTML;
-        let token = /jwt=[\w+=/.-]+"/g.exec(tokenScript);
-        token = token[0].substring(4, token[0].length - 1); // Remove the "jwt=" and the last "
+    // We get the token from the mobile app because it gives us access to more Controllers
+    let mobileHTML = await fetch(
+        "https://brevardk12.focusschoolsoftware.com/focus/mobileApps/community/"
+    ).then((r) => r.text());
+    let token = /__Module__\.token = "([\w+=/.-]+)"/g.exec(mobileHTML)[1];
 
-        let mobileLoginToken = null;
-        if (USE_MOBILE_TOKEN) {
-            let mobileHTML = await fetch(
-                "https://brevardk12.focusschoolsoftware.com/focus/mobileApps/community/"
-            );
-            let mobileHTMLText = await mobileHTML.text();
-            let mobileToken = /__Module__\.token = "[\w+=/.-]+/g
-                .exec(mobileHTMLText)[0]
-                .substring(20);
-            if (mobileToken && mobileToken.length > 10) {
-                token = mobileToken;
-            }
+    let loginToken = /"login_token":"([\w]*)"/g.exec(mobileHTML)[1];
 
-            mobileLoginToken = /"login_token":"[\w]*/g
-                .exec(mobileHTMLText)[0]
-                .substring(15);
-        }
+    // Send a message to the background script to refresh the end cookies
+    chrome.runtime.sendMessage({
+        type: "refreshCookies",
+        token,
+        sessionId,
+        loginToken
+    });
 
-        // Send a message to the background script to refresh the end cookies
-        chrome.runtime.sendMessage(
-            {
-                type: "refreshCookies",
-                token: token,
-                authToken: authToken,
-                mobileLoginToken: mobileLoginToken
-            },
-            function (response) {
-                console.log(response);
-            }
-        );
-
-        // If there is a redir parameter set, go to that page and remove the redir parameter
-        theStorage.get("refoc-redir", function (result) {
-            if (result["refoc-redir"]) {
-                theStorage.set({ "refoc-redir": null }).then(() => {
-                    console.log("refoc-redir set to null");
-                });
-
-                window.location =
-                    result["refoc-redir"] === "ref"
-                        ? targetUrl
-                        : result["refoc-redir"];
-            }
+    // If there is a redir parameter set, go to that page and remove the redir parameter
+    /**
+     * @type {{redir: string}}
+     */
+    let { redir } = await chrome.storage.local.get("redir");
+    if (redir) {
+        chrome.storage.local.set({ redir: null }).then(() => {
+            console.log("redir set to null");
         });
-    }, 100);
+
+        window.location.href = redir === "ref" ? targetUrl : redir;
+    }
 });

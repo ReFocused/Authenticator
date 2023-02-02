@@ -1,32 +1,27 @@
 {
-  "manifest_version": 3,
-  "name": "ReFocused Authenticator",
-  "version": "1.0",
-  "action": {
-    "default_popup": "popup.html",
-    "default_title": "ReFocused Authenticator"
-  },
-  "background": {
-    "service_worker": "background.js"
-  },
-  "permissions": [
-    "cookies",
-    "storage"
-  ],
-  "host_permissions": [
-    "https://brevardk12.focusschoolsoftware.com/*",
-    "https://refocused.up.railway.app/*",
-    "http://localhost:3000/*"
-  ],
-  "content_scripts": [
-    {
-      "matches": [
-        "https://brevardk12.focusschoolsoftware.com/focus/Modules.php*"
-      ],
-      "js": [
-        "focusCS.js"
-      ],
-        "run_at": "document_start"
-    }
-  ]
+    "manifest_version": 3,
+    "name": "ReFocused Authenticator",
+    "version": "1.0",
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "ReFocused Authenticator"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": ["cookies", "storage"],
+    "host_permissions": [
+        "https://brevardk12.focusschoolsoftware.com/*",
+        "https://refocused.up.railway.app/*",
+        "http://127.0.0.1:3000/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://brevardk12.focusschoolsoftware.com/focus/Modules.php*"
+            ],
+            "js": ["focusCS.js"],
+            "run_at": "document_start"
+        }
+    ]
 }
