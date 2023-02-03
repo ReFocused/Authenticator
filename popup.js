@@ -52,12 +52,10 @@
     document.getElementById("prod").checked = url === prodUrl;
     document.getElementById("local").checked = url === devUrl;
 
-    setTimeout(() => {
-        document.getElementById("targetUrlSelector").addEventListener("change", () => {
-            let newTargetUrl = prodUrl;
-            if (document.getElementById("local").checked) newTargetUrl = devUrl;
-            console.log("Setting new turl: " + newTargetUrl)
-            chrome.storage.local.set({targetUrl: newTargetUrl});
-        })
-    }, 100); // Wait for the radio selectors to be added and set
+    document.getElementById("targetUrlSelector").addEventListener("change", () => {
+        let newTargetUrl = prodUrl;
+        if (document.getElementById("local").checked) newTargetUrl = devUrl;
+        console.log("Setting new turl: " + newTargetUrl)
+        chrome.storage.local.set({targetUrl: newTargetUrl});
+    })
 })();
