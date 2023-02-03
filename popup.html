@@ -1,77 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8"/>
-    <meta
+    <head>
+        <meta charset="UTF-8" />
+        <meta
             content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
             name="viewport"
-    />
-    <meta content="ie=edge" http-equiv="X-UA-Compatible"/>
-    <title>ReFocused Authenticator Popup</title>
-</head>
-<body>
-<h1 id="heading">ReFocused&nbsp;Authenticator</h1>
-<form id="targetUrlSelector">
-    <div>
-        <input id="prod" name="targetSelector" type="radio">
-        <label for="prod" id="prodLabel">Prod</label>
-    </div>
-    <div>
-        <input id="local" name="targetSelector" type="radio">
-        <label for="local" id="localLabel">127.0.0.1:3000</label>
-    </div>
-</form>
-<p id="description"></p>
-<a
-        class="primary button"
-        href="https://brevardk12.focusschoolsoftware.com/focus/Modules.php?modname=misc%2FPortal.php&redir=%20"
-        id="loginButton"
-        target="_blank"
->Log In</a
->
-<script src="./popup.js" type="module"></script>
-</body>
-<style>
-    .button {
-        border: black solid 1px;
-        border-radius: 2px;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        transition: 300ms;
-    }
+        />
+        <meta content="ie=edge" http-equiv="X-UA-Compatible" />
+        <title>ReFocused Authenticator Popup</title>
+    </head>
+    <body>
+        <h1 id="heading">ReFocused&nbsp;Authenticator</h1>
+        <form id="targetUrlSelector">
+            <div>
+                <input id="prod" name="targetSelector" type="radio" />
+                <label for="prod" id="prodLabel">Prod</label>
+            </div>
+            <div>
+                <input id="local" name="targetSelector" type="radio" />
+                <label for="local" id="localLabel">127.0.0.1:3000</label>
+            </div>
+        </form>
+        <p id="description"></p>
+        <a
+            class="primary button"
+            href="https://brevardk12.focusschoolsoftware.com/focus/Modules.php?modname=misc%2FPortal.php&redir=ref"
+            id="loginButton"
+            target="_blank"
+            >Log In</a
+        >
+        <script src="./popup.js" type="module"></script>
+    </body>
+    <style>
+        .button {
+            border: black solid 1px;
+            border-radius: 2px;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            transition: 300ms;
+        }
 
-    button:hover {
-        filter: brightness(0.8) drop-shadow(0 0 1rem #4b4b4b);
-    }
+        button:hover {
+            filter: brightness(0.8) drop-shadow(0 0 1rem #4b4b4b);
+        }
 
-    .primary {
-        background-color: #2c9fff;
-    }
+        .primary {
+            background-color: #2c9fff;
+        }
 
-    .hidden {
-        display: none;
-    }
+        .hidden {
+            display: none;
+        }
 
-    body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
 
-    #heading {
-        text-align: center;
-    }
+        #heading {
+            text-align: center;
+        }
 
-    #targetUrlSelector {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-</style>
+        #targetUrlSelector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
 </html>
