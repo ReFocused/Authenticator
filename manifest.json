@@ -23,6 +23,5 @@
             "js": ["focusCS.js"],
             "run_at": "document_start"
         }
-    ],
-    "persistent": false
+    ]
 }
