@@ -45,10 +45,8 @@ document.addEventListener("DOMContentLoaded", async () => {
      */
     let { redir } = await chrome.storage.local.get("redir");
     if (redir) {
-        chrome.storage.local.set({ redir: null }).then(() => {
-            console.log("redir set to null");
-        });
+        chrome.storage.local.set({ redir: null });
 
-        window.location.href = redir === "ref" ? targetUrl : redir;
+        window.location.href = targetUrl + redir;
     }
 });

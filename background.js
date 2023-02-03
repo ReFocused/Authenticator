@@ -1,8 +1,7 @@
 const EXPIRATION_SECONDS = 60 * 60 * 24 * 5; // 5 days
 const prodUrl = "https://refocused.up.railway.app/";
-const devUrl = "http://127.0.0.1:3000";
-targetUrl = prodUrl;
-// targetUrl = "http://localhost:3000" // remember to change or add this to the manifest
+const devUrl = "http://127.0.0.1:3000/";
+const targetUrl = prodUrl;
 chrome.storage.local.set({ prodUrl });
 chrome.storage.local.set({ devUrl });
 chrome.storage.local.set({ targetUrl });
