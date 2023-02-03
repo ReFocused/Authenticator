@@ -52,10 +52,12 @@
     document.getElementById("prod").checked = url === prodUrl;
     document.getElementById("local").checked = url === devUrl;
 
-    document.getElementById("targetUrlSelector").addEventListener("change", () => {
-        let newTargetUrl = prodUrl;
-        if (document.getElementById("local").checked) newTargetUrl = devUrl;
-        console.log("Setting new turl: " + newTargetUrl)
-        chrome.storage.local.set({targetUrl: newTargetUrl});
-    })
+    document
+        .getElementById("targetUrlSelector")
+        .addEventListener("change", () => {
+            let newTargetUrl = prodUrl;
+            if (document.getElementById("local").checked) newTargetUrl = devUrl;
+            console.log("Setting new turl: " + newTargetUrl);
+            chrome.storage.local.set({ targetUrl: newTargetUrl });
+        });
 })();
