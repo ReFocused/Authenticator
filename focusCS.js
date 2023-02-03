@@ -49,6 +49,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             console.log("redir set to null");
         });
 
-        window.location.href = redir === "ref" ? targetUrl : redir;
+        window.location.href = redir.replace("ref", targetUrl);
     }
 });
