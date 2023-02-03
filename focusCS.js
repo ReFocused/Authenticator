@@ -4,8 +4,8 @@
 let targetUrl;
 chrome.storage.local
     .get("targetUrl")
-    .then((/** @type {{targetUrl: string}} */ { targetUrl: set }) => {
-        targetUrl = set;
+    .then((/** @type {{targetUrl: string}} */ { targetUrl: res }) => {
+        targetUrl = res;
     }); // Can't use await here, so we have to use a promise
 
 let url = new URL(window.location.href);
@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // We get the token from the mobile app because it gives us access to more Controllers
     let mobileHTML = await fetch(
-        "https://brevardk12.focusschoolsoftware.com/focus/mobileApps/community/"
+        "https://brevardk12.focusschoolsoftware.com/focus/mobileApps/community/?expo=true"
     ).then((r) => r.text());
     let token = /__Module__\.token = "([\w+=/.-]+)"/g.exec(mobileHTML)[1];
 

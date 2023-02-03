@@ -1,6 +1,10 @@
-const EXPIRATION_SECONDS = 60 * 60 * 24; // 1 day
-targetUrl = "https://refocused.up.railway.app/";
+const EXPIRATION_SECONDS = 60 * 60 * 24 * 5; // 5 days
+const prodUrl = "https://refocused.up.railway.app/";
+const devUrl = "http://127.0.0.1:3000";
+targetUrl = prodUrl;
 // targetUrl = "http://localhost:3000" // remember to change or add this to the manifest
+chrome.storage.local.set({ prodUrl });
+chrome.storage.local.set({ devUrl });
 chrome.storage.local.set({ targetUrl });
 
 chrome.runtime.onMessage.addListener(
@@ -12,6 +16,7 @@ chrome.runtime.onMessage.addListener(
         console.log(type, sessionId, token, loginToken);
         if (type === "refreshCookies") {
             (async () => {
+                let { targetUrl } = await chrome.storage.local.get("targetUrl");
                 let expiry = Math.floor(Date.now() / 1000) + EXPIRATION_SECONDS;
 
                 chrome.cookies.set({

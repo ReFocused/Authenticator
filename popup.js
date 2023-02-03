@@ -26,8 +26,6 @@
         })
     ];
 
-    console.log(cookies);
-
     if (cookies.every((cookie) => cookie !== null)) {
         document.getElementById(
             "description"
@@ -44,4 +42,22 @@
             "No Cookies found, please login to Focus to authenticate.";
         document.getElementById("loginButton").innerText = "Log In";
     }
+
+    let { prodUrl } = await chrome.storage.local.get("prodUrl");
+    let { devUrl } = await chrome.storage.local.get("devUrl");
+
+    document.getElementById("prodLabel").innerText = prodUrl;
+    document.getElementById("localLabel").innerText = devUrl;
+    // set the correct radio button to selected based on the current activeUrl
+    document.getElementById("prod").checked = url === prodUrl;
+    document.getElementById("local").checked = url === devUrl;
+
+    setTimeout(() => {
+        document.getElementById("targetUrlSelector").addEventListener("change", () => {
+            let newTargetUrl = prodUrl;
+            if (document.getElementById("local").checked) newTargetUrl = devUrl;
+            console.log("Setting new turl: " + newTargetUrl)
+            chrome.storage.local.set({targetUrl: newTargetUrl});
+        })
+    }, 100); // Wait for the radio selectors to be added and set
 })();
