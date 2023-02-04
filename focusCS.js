@@ -58,11 +58,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // If there is a redir parameter set, go to that page and remove the redir parameter
     if (redir) {
-        let u = redir
+        window.location.href = redir
             .replace("ref", targetUrl)
             // remove any more than one `/` in a row, except for the protocol
             .replace(/(?<!:)(\/{2,})/g, "/");
-
-        window.location.href = u;
     }
 });

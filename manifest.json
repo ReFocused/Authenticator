@@ -1,6 +1,7 @@
 {
     "manifest_version": 3,
     "name": "ReFocused Authenticator",
+    "description": "An extension allowing you to easily log into ReFocused",
     "version": "1.0",
     "action": {
         "default_popup": "popup.html",
@@ -21,6 +22,14 @@
                 "https://brevardk12.focusschoolsoftware.com/focus/Modules.php*"
             ],
             "js": ["focusCS.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://refocused.up.railway.app/login*",
+                "http://127.0.0.1:3000/login*"
+            ],
+            "js": ["loginRedirCS.js"],
             "run_at": "document_start"
         }
     ]
