@@ -35,17 +35,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         hideElems.remove();
     }
 
-    let sessionId =
-        /static get session_id\(\) {\n[\s]*return "([\w+=/]+)";/g.exec(
-            document.body.innerHTML
-        )[1];
-
     // We get the token from the mobile app because it gives us access to more Controllers
     let mobileHTML = await fetch(
         "https://brevardk12.focusschoolsoftware.com/focus/mobileApps/community/?expo=true"
     ).then((r) => r.text());
-    let token = /__Module__\.token = "([\w+=/.-]+)"/g.exec(mobileHTML)[1];
 
+    let sessionId =
+        /static get session_id\(\) {\n[\s]*return "([\w+=/]+)";/g.exec(
+            mobileHTML
+        )[1];
+    let token = /__Module__\.token = "([\w+=/.-]+)"/g.exec(mobileHTML)[1];
     let loginToken = /"login_token":"([\w]*)"/g.exec(mobileHTML)[1];
 
     // Send a message to the background script to refresh the end cookies
