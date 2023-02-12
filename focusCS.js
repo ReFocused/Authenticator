@@ -17,9 +17,7 @@ if (redir) {
 }
 
 const hideElems = document.createElement("style");
-hideElems.innerHTML = `* {
-    display: none !important;
-}`;
+hideElems.innerHTML = "*{display:none !important;}";
 document.documentElement.appendChild(hideElems);
 
 // Register an event listener for the page to finish loading and then copy the auth token + go to redir + remove redir
